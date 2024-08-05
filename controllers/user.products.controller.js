@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const logger = require('../logger/logger');
 
 exports.findAll = async(req, res) => {
   console.log("Find all user's products");
@@ -6,10 +7,13 @@ exports.findAll = async(req, res) => {
   try {
     const result = await User.find({}, {_id:0, username:1, products:1})
     res.status(200).json({data: result});
-    console.log("Reading all users products")
+    console.log("Reading all users products");
+    logger.debug("Success in reading all users products");
+    logger.info("Success in reading all users products");
   } catch(err) {
     res.status(400).json({data: err});
     console.log("Problem in reading users products");
+    logger.error(`Problem in reading all users products, ${err}`);
   }
 }
 
